@@ -1,6 +1,10 @@
 import React from 'react';
+import{useNavigate} from 'react-router-dom';
 import './ProductTable.css';
 import { FaEdit,FaTrash,FaDownload} from 'react-icons/fa';
+import Footer from '../components/Footer';
+
+
 
 const products = [
   {
@@ -78,7 +82,20 @@ const products = [
   },
 ];
 
+
+
 const ProductTable = () => {
+  const navigate = useNavigate();
+
+  const handleAddProduct = () => {
+    navigate('/add-product');
+  };
+
+  const handleEditProduct = (id) => {
+    navigate(`/edit-product/${id}`);
+  };
+
+
   return (
     <div className="product-page">
       <div className="breadcrumb">
@@ -89,19 +106,16 @@ const ProductTable = () => {
       </div>
       <div className="product-table-container">
         <div className="product-table-header">
-          
-         
-            <input type="text" placeholder="Search
-             in products" className="search-bar" />
-              <div className="controls">
-            <button className="add-product-btn">+ Add Product</button>
+          <input type="text" placeholder="Search in products" className="search-bar" />
+          <div className="controls">
+            <button className="add-product-btn" onClick={handleAddProduct}>+ Add Product</button>
             <button className="import-csv-btn"><FaDownload/>Import CSV</button>
           </div>
         </div>
         <table className="product-table">
           <thead>
             <tr>
-              <th></th> {/* for checkbox */}
+              <th></th>
               <th>Product</th>
               <th>Category</th>
               <th>Stock</th>
@@ -123,7 +137,7 @@ const ProductTable = () => {
                 <td>{product.stock}</td>
                 <td>{product.price}</td>
                 <td>
-                  <button className="edit-btn"><FaEdit /></button>
+                  <button className="edit-btn" onClick={() => handleEditProduct(product.id)}><FaEdit /></button>
                   <button className="delete-btn"><FaTrash /></button>
                 </td>
               </tr>
@@ -131,7 +145,9 @@ const ProductTable = () => {
           </tbody>
         </table>
       </div>
+      <Footer />
     </div>
   );
 };
-export default ProductTable
+
+export default ProductTable;

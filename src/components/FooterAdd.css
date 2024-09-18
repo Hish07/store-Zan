@@ -1,0 +1,44 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 250px; 
+    background-color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    z-index: 1000;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+  
+  .btn-cancel,
+  .btn-add-product {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-cancel {
+    background-color: #f0f2f5;
+    color: #333;
+  }
+  
+  .btn-add-product {
+    background-color: #4a6cf7;
+    color: #fff;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #e0e2e5;
+  }
+  
+  .btn-add-product:hover {
+    background-color: #3a5ce7;
+  }

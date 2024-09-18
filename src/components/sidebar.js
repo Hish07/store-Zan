@@ -1,37 +1,49 @@
 import React, { useState } from 'react';
-import { FaTachometerAlt, FaBox, FaUsers, FaTags, FaClipboardList, FaTicketAlt, FaCommentDots, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FaTachometerAlt, FaBox, FaUsers, FaTags, FaClipboardList, FaTicketAlt, FaCommentDots, FaCog, FaSignOutAlt,} from 'react-icons/fa';
 import './sidebar.css'; 
+import { FaShop } from 'react-icons/fa6';
 
 const Sidebar = () => {
-  const [activeMenu, setActiveMenu] = useState('Products'); // Default active menu
+  const location = useLocation();
+  const [activeMenu, setActiveMenu] = useState('Products');
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
+  const navigate =useNavigate();
+  
+
+
 
   return (
     <div className="sidebar">
       <div className="logo-section">
+        <Link to="/dashboard">
         <img src="https://cdn-icons-png.freepik.com/512/7835/7835563.png" alt="StoreZan Logo" className="logo-img" />
-       
-       
+        </Link>
       </div>
       <h4 className="logo-text">StoreZan</h4>
     
-     
       <div>Menu</div>
       <ul className="menu-list">
         <li
           className={activeMenu === 'Dashboard' ? 'active' : ''}
           onClick={() => handleMenuClick('Dashboard')}
         >
-          <FaTachometerAlt /> Dashboard
+          <Link to="/dashboard"><FaTachometerAlt /> Dashboard</Link>
+        </li>
+        <li
+          className={activeMenu === 'shop' ? 'active' : ''}
+          onClick={() => handleMenuClick('Shop')}
+        >
+          <Link to="/"><FaShop /> Shop</Link>
         </li>
         <li
           className={activeMenu === 'Products' ? 'active' : ''}
           onClick={() => handleMenuClick('Products')}
         >
-          <FaBox /> Products
+          <Link to="/"><FaBox /> Products</Link>
         </li>
         <li
           className={activeMenu === 'Customer' ? 'active' : ''}

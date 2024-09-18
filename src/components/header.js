@@ -21,7 +21,6 @@ const Header = () => {
           className="profile-pic"
         />
           <div className="profile-details">
-            
             <span className="user-name">Arfi Ganteng</span>
             <span className="user-email">arfi.ganteng@mail.com</span>
           </div>
