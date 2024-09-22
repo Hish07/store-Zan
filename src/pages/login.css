@@ -1,0 +1,109 @@
+.login-wrapp {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .login-wrapp .login-left {
+    width: 50%;
+    position: relative;
+    background: #EEEEEE;
+    background: url(http://storezan.com/images/st1.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  .login-wrapp .login-right {
+    width: 50%;
+  }
+  
+  .login-wrapp .login-left .login-form-container {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px 30px 60px;
+    border-radius: 10px;
+    border: 1px solid #D7D7D7;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields {
+    width: 100%;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields .text-field {
+    width: 100%;
+    margin: 0 0 20px;
+    position: relative;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields .text-field input {
+    width: 100%;
+    height: 15px;
+    border: 1px solid #D7D7D7;
+    border-radius: 10px;
+    color: #717171;
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields .text-field input::placeholder {
+    color: #717171;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields .submit-btn {
+    width: 100%;
+    background: #0063A6;
+    border: 1px solid #0063A6;
+    padding: 9px;
+    border-radius: 10px;
+    color: #fff;
+    transition: all 0.25s ease-out 0s;
+  }
+  
+  .login-wrapp .login-left .login-form-container .text-fields .submit-btn:hover {
+    color: #0063A6;
+    background: none;
+  }
+  
+  .login-wrapp .login-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .show-icon {
+    height: 20px;
+    width: 20px;
+    display: block;
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    cursor: pointer;
+  }
+  
+  .show-icon img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .show-icon .hide-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  
+  .show-icon .show .hide-icon {
+    opacity: 1;
+  }
+  
+  .show-icon .show > img {
+    opacity: 0;
+  }
