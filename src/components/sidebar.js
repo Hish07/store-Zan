@@ -37,7 +37,7 @@ const Sidebar = () => {
           className={activeMenu === 'shop' ? 'active' : ''}
           onClick={() => handleMenuClick('Shop')}
         >
-          <Link to="/"><FaShop /> Shop</Link>
+          <Link to="/shop"><FaShop /> Store</Link>
         </li>
         <li
           className={activeMenu === 'Products' ? 'active' : ''}

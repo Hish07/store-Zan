@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaBell, FaChevronDown } from 'react-icons/fa'; 
+import { FaBars, FaBell, FaChevronDown } from 'react-icons/fa'; 
 import './header.css'; 
 
-const Header = () => {
+const Header = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -11,15 +11,18 @@ const Header = () => {
 
   return (
     <div className="header">
+      <button onClick={toggleSidebar} className="toggle-sidebar-btn">
+        <FaBars />
+      </button>
       <input type="text" placeholder="Search something here" className="search-bar" />
       <div className="user-info">
         <FaBell className="notification-icon" />
         <div className="profile-section" onClick={toggleDropdown}>
-        <img 
-          src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
-          alt="Profile"
-          className="profile-pic"
-        />
+          <img 
+            src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+            alt="Profile"
+            className="profile-pic"
+          />
           <div className="profile-details">
             <span className="user-name">Arfi Ganteng</span>
             <span className="user-email">arfi.ganteng@mail.com</span>

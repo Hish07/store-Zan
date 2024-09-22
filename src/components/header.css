@@ -24,9 +24,10 @@
   
   .notification-icon {
     font-size: 20px;
-    margin-right: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
     cursor: pointer;
-    color:blue;
+    color:rgb(3, 3, 225);
   }
   
   .profile-section {
