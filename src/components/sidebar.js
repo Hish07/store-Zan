@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaBox, FaUsers, FaTags, FaClipboardList, FaTicketAlt, FaCommentDots, FaCog, FaSignOutAlt,} from 'react-icons/fa';
-import './sidebar.css'; 
+import { FaTachometerAlt, FaBox, FaUsers, FaTags, FaClipboardList, FaTicketAlt, FaCommentDots, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import './sidebar.css';
 import { FaShop } from 'react-icons/fa6';
 
-const Sidebar = () => {
+const Sidebar = ({ onLogout }) => {  // Accept the onLogout prop
   const location = useLocation();
-  const [activeMenu, setActiveMenu] = useState('Products');
+  const [activeMenu, setActiveMenu] = useState('Dashboard');
+  const navigate = useNavigate();
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
-  const navigate =useNavigate();
-  
 
-
+  const handleLogoutClick = () => {
+    onLogout();  // Call the onLogout function passed from App.js
+    navigate('/login');  // Redirect to the login page
+  };
 
   return (
     <div className="sidebar">
       <div className="logo-section">
         <Link to="/dashboard">
-        <img src="https://cdn-icons-png.freepik.com/512/7835/7835563.png" alt="StoreZan Logo" className="logo-img" />
+          <img src="https://cdn-icons-png.freepik.com/512/7835/7835563.png" alt="StoreZan Logo" className="logo-img" />
         </Link>
       </div>
       <h4 className="logo-text">StoreZan</h4>
-    
+      
       <div>Menu</div>
       <ul className="menu-list">
         <li
@@ -34,7 +36,7 @@ const Sidebar = () => {
           <Link to="/dashboard"><FaTachometerAlt /> Dashboard</Link>
         </li>
         <li
-          className={activeMenu === 'shop' ? 'active' : ''}
+          className={activeMenu === 'Shop' ? 'active' : ''}
           onClick={() => handleMenuClick('Shop')}
         >
           <Link to="/shop"><FaShop /> Store</Link>
@@ -87,7 +89,7 @@ const Sidebar = () => {
         </li>
         <li
           className={activeMenu === 'Logout' ? 'active' : ''}
-          onClick={() => handleMenuClick('Logout')}
+          onClick={handleLogoutClick}  // Trigger logout and navigation on click
         >
           <FaSignOutAlt /> Logout
         </li>

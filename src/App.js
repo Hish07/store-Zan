@@ -7,7 +7,7 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import DashboardContent from './pages/Dashboard';
 import Shop from './pages/Shop';
-import Login from './pages/login'  // Add Login component
+import Login from './pages/login';  // Add Login component
 import Signup from './pages/signup'; // Add Signup component
 import './App.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -29,14 +29,14 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    setIsAuthenticated(false);
+    localStorage.removeItem('access_token');  // Remove token from localStorage
+    setIsAuthenticated(false);  // Set authentication state to false
   };
 
   return (
     <Router>
       <div className="app">
-        {isAuthenticated && isSidebarVisible && <Sidebar />}
+        {isAuthenticated && isSidebarVisible && <Sidebar onLogout={handleLogout} />}  {/* Pass handleLogout to Sidebar */}
         <div className={`main-content ${!isSidebarVisible ? 'sidebar-hidden' : ''}`}>
           {isAuthenticated && <Header toggleSidebar={toggleSidebar} onLogout={handleLogout} />}
           <Routes>
