@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import ProductTable from './pages/productTable';
 import AddProduct from './pages/AddProduct';
@@ -7,14 +7,17 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import DashboardContent from './pages/Dashboard';
 import Shop from './pages/Shop';
-import Login from './pages/login';  // Add Login component
+import Login from './pages/login'; // Add Login component
 import Signup from './pages/signup'; // Add Signup component
 import './App.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { AuthContext } from './context/Authcontext'; // Import AuthProvider
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  
 
   useEffect(() => {
     // Check if the user is authenticated based on the token in localStorage
@@ -29,37 +32,37 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');  // Remove token from localStorage
-    setIsAuthenticated(false);  // Set authentication state to false
+    localStorage.removeItem('access_token'); // Remove token from localStorage
+    setIsAuthenticated(false); // Set authentication state to false
   };
 
   return (
-    <Router>
-      <div className="app">
-        {isAuthenticated && isSidebarVisible && <Sidebar onLogout={handleLogout} />}  {/* Pass handleLogout to Sidebar */}
-        <div className={`main-content ${!isSidebarVisible ? 'sidebar-hidden' : ''}`}>
-          {isAuthenticated && <Header toggleSidebar={toggleSidebar} onLogout={handleLogout} />}
-          <Routes>
-            {!isAuthenticated ? (
-              <>
-                <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="*" element={<Navigate to="/login" />} />
-              </>
-            ) : (
-              <>
-                <Route path="/" element={<ProductTable />} />
-                <Route path="/add-product" element={<AddProduct />} />
-                <Route path="/edit-product/:id" element={<EditProduct />} />
-                <Route path="/dashboard" element={<DashboardContent />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </>
-            )}
-          </Routes>
+      <Router>
+        <div className="app">
+          {isAuthenticated && isSidebarVisible && <Sidebar onLogout={handleLogout} />} {/* Pass handleLogout to Sidebar */}
+          <div className={`main-content ${!isSidebarVisible ? 'sidebar-hidden' : ''}`}>
+            {isAuthenticated && <Header toggleSidebar={toggleSidebar}/>}
+            <Routes>
+              {!isAuthenticated ? (
+                <>
+                  <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="*" element={<Navigate to="/login" />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/" element={<ProductTable />} />
+                  <Route path="/add-product" element={<AddProduct />} />
+                  <Route path="/edit-product/:id" element={<EditProduct />} />
+                  <Route path="/dashboard" element={<DashboardContent />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </>
+              )}
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
   );
 }
 

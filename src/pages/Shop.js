@@ -1,45 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import {StoreContext} from '../context/StoreContext'
 import './Shop.css';
 
 const Shop = () => {
-  const [formData, setFormData] = useState({
-    shopName: '',
-    branch: '',
-    shopCode: '',
-    url: '',
-    address1: '',
-    address2: '',
-    address3: '',
-    city: '',
-    state: '',
-    country: '',
-    postalCode: '',
-    email: '',
-    primaryPhone: '',
-    secondaryPhone: '',
-    mainContactPerson: '',
-    mainContactPersonContact: '',
-    openTime: '',
-    closeTime: '',
-    workingDays: [],
-    deliveryCharge: '',
-    category: '',
-    yearOfOperation: '',
-    currency: '',
-    averageCost: '',
-    preOrderAvail: false,
-    paymentMode: '',
-    buyOption: '',
-    status: 'active',
-    paymentPlan: '',
-    deliveryTotalMinute: ''
-  });
-  const [images, setImages] = useState({
-    image1: null,
-    image2: null,
-    image3: null,
-    image4: null
-  });
+  const {formData, setFormData,images, setImages, loading, error, updateFormData } = useContext(StoreContext);
+    
+
+
   const handleImageChange = (e, imageKey) => {
     const file = e.target.files[0];
     if (file) {
@@ -77,6 +45,14 @@ const Shop = () => {
     console.log(images);
     // Here you would typically send the data to your backend
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="shop-container">
@@ -252,7 +228,8 @@ const Shop = () => {
                 id="status"
                 name="status"
                 checked={formData.status === 'active'}
-                onChange={(e) => setFormData(prevState => ({ ...prevState, status: e.target.checked ? 'active' : 'inactive' }))}
+                onChange={(e) => setFormData(prevState =>
+                  ({ ...prevState, status: e.target.checked ? 'active' : 'inactive' }))}
               />
               <label htmlFor="status">
                 {formData.status === 'active' ? 'Active' : 'Inactive'}
@@ -268,6 +245,7 @@ const Shop = () => {
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
               <option value="GBP">GBP</option>
+              <option value="INR">INR</option>
             </select>
           </div>
           <div className="form-group">

@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaTachometerAlt, FaBox, FaUsers, FaTags, FaClipboardList, FaTicketAlt, FaCommentDots, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import './sidebar.css';
 import { FaShop } from 'react-icons/fa6';
+import { AuthContext } from '../context/Authcontext';
 
-const Sidebar = ({ onLogout }) => {  // Accept the onLogout prop
+const Sidebar = () => {  // Accept the onLogout prop
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState('Dashboard');
   const navigate = useNavigate();
-
+  const { token, logout } = useContext(AuthContext);
+  
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
 
   const handleLogoutClick = () => {
-    onLogout();  // Call the onLogout function passed from App.js
+    console.log('funggggg')
+    logout();
     navigate('/login');  // Redirect to the login page
   };
 

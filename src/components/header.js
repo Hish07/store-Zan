@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { FaBars, FaBell, FaChevronDown } from 'react-icons/fa'; 
 import './header.css'; 
-
+import { StoreContext } from '../context/StoreContext';
 const Header = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const {formData } = useContext(StoreContext);
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
