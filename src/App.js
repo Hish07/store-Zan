@@ -12,11 +12,13 @@ import Signup from './pages/signup'; // Add Signup component
 import './App.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { AuthContext } from './context/Authcontext'; // Import AuthProvider
+import { StoreContext } from './context/StoreContext';
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { fetchStoreData } = useContext(StoreContext)
   
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function App() {
     const token = localStorage.getItem('access_token');
     if (token) {
       setIsAuthenticated(true);
+      fetchStoreData()
     }
   }, []);
 
@@ -37,7 +40,7 @@ function App() {
   };
 
   return (
-      <Router>
+      // <Router>
         <div className="app">
           {isAuthenticated && isSidebarVisible && <Sidebar onLogout={handleLogout} />} {/* Pass handleLogout to Sidebar */}
           <div className={`main-content ${!isSidebarVisible ? 'sidebar-hidden' : ''}`}>
@@ -62,7 +65,7 @@ function App() {
             </Routes>
           </div>
         </div>
-      </Router>
+      // </Router>
   );
 }
 

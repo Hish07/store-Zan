@@ -49,12 +49,13 @@ export const StoreProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchStoreData();
-  }, []);
+  useEffect(()=> {
+    console.log('Form Data : ', formData)
+  }, [formData])
 
   // Fetch store data function
   const fetchStoreData = async () => {
+    console.log('FetchStore Data Called')
     setLoading(true);
     setError(null);
     const token = localStorage.getItem('access_token');
@@ -69,6 +70,7 @@ export const StoreProvider = ({ children }) => {
       if (data.status[0].stat === 'T') {
         const storeData = data.storedt[0];
         updateFormData(storeData);
+        console.log(storeData)
       } else {
         setError('Failed to fetch store data: ' + data.status[0].message);
       }
@@ -83,9 +85,10 @@ export const StoreProvider = ({ children }) => {
   // Update form data function
   const updateFormData = (storeData) => {
     setFormData({
+      // Shop and Store Info
       shopName: storeData.SHOPNAME || '',
-      branch: storeData.branch || '',
       shopCode: storeData.SHOPCODE || '',
+      branch: storeData.branch || '',
       url: storeData.STORE_URL || '',
       address1: storeData.address || '',
       address2: storeData.SHOPADDRESS2 || '',
@@ -94,26 +97,53 @@ export const StoreProvider = ({ children }) => {
       state: storeData.state || '',
       country: storeData.country || '',
       postalCode: storeData.pcode || '',
-      email: storeData.SHOPEMAIL || '',
+      openTime: formatTime(storeData.STORE_OPENTM),
+      closeTime: formatTime(storeData.STORE_CLOSETM),
+      workingDays: parseWorkingDays(storeData.STORE_OPENDAYS),
+      yearOfOperation: storeData.yearofoperation || '',
+      averageCost: storeData.STORE_Avgcost || 0,
+  
+      // Contact Info
+      email: storeData.Email || '',
       primaryPhone: storeData.PhoneNumber || '',
       secondaryPhone: storeData.SHOPPHONENUMBER2 || '',
       mainContactPerson: storeData.SHOPINCHANGE || '',
       mainContactPersonContact: storeData.SHOPINCHANGEPHONE || '',
-      openTime: formatTime(storeData.STORE_OPENTM),
-      closeTime: formatTime(storeData.STORE_CLOSETM),
-      workingDays: parseWorkingDays(storeData.STORE_OPENDAYS),
-      deliveryCharge: storeData.STORE_DELIVCHRG || '',
+  
+      // Company and Category Info
+      companyName: storeData.Companyname || '',
       category: storeData.CATNAME || '',
-      yearOfOperation: storeData.SHOPYEAROFOPERATION || '',
-      currency: storeData.currency === 1 ? 'INR' : '',
-      averageCost: storeData.STORE_Avgcost || '',
+      categoryId: storeData.categoryid || 0,
+  
+      // Delivery and Payment
+      deliveryCharge: storeData.STORE_DELIVCHRG || 0,
+      deliveryTotalMinute: storeData.STORE_Deliveryminutes || 0,
       preOrderAvail: storeData.STORE_Preorderavail === 'T',
       paymentMode: storeData.STORE_PAYMODE === 'O' ? 'online' : (storeData.STORE_PAYMODE === 'C' ? 'cash' : ''),
-      buyOption: storeData.STORE_BOID === 1 ? 'delivery' : (storeData.STORE_BOID === 2 ? 'takeaway' : ''),
-      status: storeData.status === 'T' ? 'active' : 'inactive',
       paymentPlan: storeData.STORE_Payment_P_ID === 1 ? 'percentage' : (storeData.STORE_Payment_P_ID === 2 ? 'monthly' : ''),
-      deliveryTotalMinute: storeData.STORE_Deliveryminutes || ''
+      buyOption: storeData.STORE_BOID === 1 ? 'delivery' : (storeData.STORE_BOID === 2 ? 'takeaway' : ''),
+  
+      // Status
+      status: storeData.status === 'T' ? 'active' : 'inactive',
+  
+      // Other Shop Info
+      shopEmail: storeData.SHOPEMAIL || '',
+      shopLanguage: storeData.SHOPLANG || '',
+      shopComments: storeData.SHOPCOMMENTS || '',
+      shopLat: storeData.SHOPLAT || '',
+  
+      // Owner Info
+      firstName: storeData.FirstName || '',
+      lastName: storeData.LastName || '',
+      
+      // Miscellaneous
+      currency: storeData.currency === 1 ? 'INR' : '',
+      deliveryStatus: storeData.deliverystatus || 0,
+      retailLocation: storeData.retaillocation || '',
+      annualInStore: storeData.annualinstore || ''
     });
+  
+  
 
     setImages({
       image1: storeData.STORE_IMG1 || null,

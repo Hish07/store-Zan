@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {StoreContext} from '../context/StoreContext'
+import { StoreContext } from '../context/StoreContext'
 import './Shop.css';
 
 const Shop = () => {
-  const {formData, setFormData,images, setImages, loading, error, updateFormData } = useContext(StoreContext);
+  const {formData, setFormData,images, setImages, loading, error, updateFormData,fetchStoreData } = useContext(StoreContext);
     
+  useEffect(() => {
+    fetchStoreData();
+  }, []);
 
 
   const handleImageChange = (e, imageKey) => {

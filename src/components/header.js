@@ -4,7 +4,7 @@ import './header.css';
 import { StoreContext } from '../context/StoreContext';
 const Header = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const {formData } = useContext(StoreContext);
+  const { formData } = useContext(StoreContext);
 
 
   const toggleDropdown = () => {
@@ -26,8 +26,9 @@ const Header = ({ toggleSidebar }) => {
             className="profile-pic"
           />
           <div className="profile-details">
-            <span className="user-name">Arfi Ganteng</span>
-            <span className="user-email">arfi.ganteng@mail.com</span>
+            {/* <span className="user-name">Arfi Ganteng</span> */}
+            <span className="user-name">{ formData.firstName} {formData.lastName}</span>
+            <span className="user-email"> { formData.email }</span>
           </div>
           <FaChevronDown className="dropdown-icon" />
         </div>
