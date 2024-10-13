@@ -60,7 +60,7 @@ const Sidebar = () => {  // Accept the onLogout prop
           className={activeMenu === 'Category' ? 'active' : ''}
           onClick={() => handleMenuClick('Category')}
         >
-          <FaTags /> Category
+         <Link to="/category"> <FaTags /> Category</Link>
         </li>
         <li
           className={activeMenu === 'Orders' ? 'active' : ''}

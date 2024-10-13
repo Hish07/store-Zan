@@ -7,6 +7,7 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import DashboardContent from './pages/Dashboard';
 import Shop from './pages/Shop';
+import Category from './pages/Category';
 import Login from './pages/login'; // Add Login component
 import Signup from './pages/signup'; // Add Signup component
 import './App.css';
@@ -59,6 +60,8 @@ function App() {
                   <Route path="/edit-product/:id" element={<EditProduct />} />
                   <Route path="/dashboard" element={<DashboardContent />} />
                   <Route path="/shop" element={<Shop />} />
+                  <Route path="/category" element={<Category />} />
+                  
                   <Route path="*" element={<Navigate to="/" />} />
                 </>
               )}

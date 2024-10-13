@@ -60,7 +60,7 @@ export const StoreProvider = ({ children }) => {
     setError(null);
     const token = localStorage.getItem('access_token');
     try {
-      const response = await axios.get('http://storezan.com/webapi/STORE/storedata', {
+      const response = await axios.get(' https://www.storezan.com/webapi/STORE/storedata', {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

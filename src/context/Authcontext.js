@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     setError('');
 
     try {
-      const response = await axios.post('http://www.storezan.com/webapi/token', 
+      const response = await axios.post('https://www.storezan.com/webapi/token', 
         new URLSearchParams({
           grant_type: 'password',
           username: email,
