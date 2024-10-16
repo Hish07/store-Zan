@@ -1,3 +1,21 @@
+/* Hide scrollbar for modern browsers (Chrome, Safari, Edge, etc.) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none; /* Hide scrollbar */
+  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer 10+ */
+}
+
+/* Ensure content is scrollable */
+body, html {
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+
+
 .app {
   display: flex;
   height: 100vh;

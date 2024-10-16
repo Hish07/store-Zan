@@ -2,11 +2,12 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    left: 250px; 
+    left: 230px; 
     background-color: #fff;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
-    z-index: 1000;
+    /* z-index: 1000; */
+    
   }
   
   .footer-content {
