@@ -5,9 +5,11 @@ import Footer from '../components/Footer'; // Footer component for the page
 
 const SubCategory = () => {
   const [categories, setCategories] = useState([]); // Store fetched categories
-  const [subcategoryName, setSubcategoryName] = useState('');
-  const [subcategoryDesc, setSubcategoryDesc] = useState('');
-  const [categoryID, setCategoryID] = useState('');
+  const [subcategoryName, setSubcategoryName] = useState(''); // Subcategory name input state
+  const [subcategoryDesc, setSubcategoryDesc] = useState(''); // Subcategory description input state
+  const [categoryID, setCategoryID] = useState(''); // Category ID input state
+  const [subcategories, setSubcategories] = useState([]); // Store fetched subcategories
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]); // Selected subcategories for handling checkbox logic
 
   const navigate = useNavigate();
 
@@ -20,9 +22,23 @@ const SubCategory = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setCategories(data.category);
+        setCategories(data.category); // Store categories in state
       })
       .catch((error) => console.error('Error fetching category data:', error));
+  }, []);
+
+  // Fetch subcategories to display in table
+  useEffect(() => {
+    fetch('https://www.storezan.com/webapi/STORE/getsubcategory', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSubcategories(data.subcategory); // Store subcategories in state
+      })
+      .catch((error) => console.error('Error fetching subcategory data:', error));
   }, []);
 
   // Handle subcategory form submission
@@ -41,11 +57,36 @@ const SubCategory = () => {
       .then((data) => {
         if (data.status && data.status[0].stat === 'T') {
           alert('Subcategory added successfully!');
+          // Refresh subcategory list after adding
+          fetchSubcategories();
         } else {
           alert('Failed to add subcategory.');
         }
       })
       .catch((error) => console.error('Error saving subcategory:', error));
+  };
+
+  // Fetch updated subcategories after adding a new one
+  const fetchSubcategories = () => {
+    fetch('https://www.storezan.com/webapi/STORE/getsubcategory', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSubcategories(data.subcategory); // Refresh subcategories in state
+      })
+      .catch((error) => console.error('Error fetching subcategory data:', error));
+  };
+
+  // Handle subcategory selection (for checkboxes)
+  const handleSelectSubcategory = (subcategoryId) => {
+    if (selectedSubcategories.includes(subcategoryId)) {
+      setSelectedSubcategories(selectedSubcategories.filter(id => id !== subcategoryId));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, subcategoryId]);
+    }
   };
 
   return (
@@ -100,6 +141,43 @@ const SubCategory = () => {
           Save Subcategory
         </button>
       </form>
+
+      {/* Table for displaying subcategories */}
+      <div className="subcategory-list">
+        <h4>Existing Subcategories</h4>
+        <table className="subcategory-table">
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Subcategory Name</th>
+              <th>Description</th>
+              <th>Category Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subcategories && subcategories.length > 0 ? (
+              subcategories.map((subcategory) => (
+                <tr key={subcategory.SUBCATEGORYID}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedSubcategories.includes(subcategory.SUBCATEGORYID)}
+                      onChange={() => handleSelectSubcategory(subcategory.SUBCATEGORYID)}
+                    />
+                  </td>
+                  <td>{subcategory.SUBCATEGORYNAME}</td>
+                  <td>{subcategory.SUBCATEGORYDESC}</td>
+                  <td>{subcategory.CATEGORYNAME}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No subcategories available</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       <Footer />
     </div>

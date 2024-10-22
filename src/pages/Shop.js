@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { StoreContext } from '../context/StoreContext'
+import { StoreContext } from '../context/StoreContext';
+import { AuthContext } from '../context/Authcontext';
 import './Shop.css';
 
-const Shop = () => {
-  const {formData, setFormData,images, setImages, loading, error, updateFormData,fetchStoreData } = useContext(StoreContext);
-    
+export default function Shop() {
+  const { formData, setFormData, images, setImages, loading, error, updateFormData, fetchStoreData } = useContext(StoreContext);
+  const { token } = useContext(AuthContext);
+  const [apiError, setApiError] = useState(null);
+
   useEffect(() => {
     fetchStoreData();
   }, []);
-
 
   const handleImageChange = (e, imageKey) => {
     const file = e.target.files[0];
@@ -36,17 +38,51 @@ const Shop = () => {
   const handleWorkingDaysChange = (day) => {
     setFormData(prevState => ({
       ...prevState,
-      workingDays: prevState.workingDays.includes(day)
+      workingDays: prevState.STORE_OPENDAYS.includes(day)
         ? prevState.workingDays.filter(d => d !== day)
         : [...prevState.workingDays, day]
     }));
   };
 
+  const sendDataToApi = async (data) => {
+  
+    console.log('update Data Called');
+    setApiError(null);
+    console.log("data is : " + JSON.stringify(data));
+
+    const token = localStorage.getItem('access_token'); // Fetch the token from local storage
+
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'https://www.storezan.com/webapi/STORE/savestore',
+        data: JSON.stringify(data),
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('Response:', response); // Log the entire response object
+
+      if (response.data && response.data.status && response.data.status[0].stat === 'T') {
+        console.log('Store data saved successfully');
+      } else {
+        console.error('API response error:', response.data);
+        throw new Error(response.data?.status[0]?.message || 'Unknown API Error'); // Provide a detailed error message
+      }
+    } catch (error) {
+      console.error('Error saving store data:', error);
+      setApiError(error.message || 'An unknown error occurred');
+    }
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log(images);
-    // Here you would typically send the data to your backend
+    setApiError(null);
+
+    sendDataToApi(formData);
   };
 
   if (loading) {
@@ -64,7 +100,7 @@ const Shop = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="shopName">Shop Name</label>
-            <input type="text" id="shopName" name="shopName" value={formData.shopName} onChange={handleInputChange} required />
+            <input type="text" id="shopName" name="SHOPNAME" value={formData.SHOPNAME} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="branch">Branch</label>
@@ -74,11 +110,11 @@ const Shop = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="shopCode">Shop Code</label>
-            <input type="text" id="shopCode" name="shopCode" value={formData.shopCode} onChange={handleInputChange} required />
+            <input type="text" id="SHOPCODE" name="SHOPCODE" value={formData.SHOPCODE} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="url">URL</label>
-            <input type="url" id="url" name="url" value={formData.url} onChange={handleInputChange} />
+            <input type="url" id="url" name="STORE_URL" value={formData.STORE_URL} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
@@ -88,13 +124,13 @@ const Shop = () => {
           </div>
           <div className="form-group">
             <label htmlFor="address2">Address2</label>
-            <input type="text" id="address2" name="address2" value={formData.address2} onChange={handleInputChange} />
+            <input type="text" id="address2" name="SHOPADRESS2" value={formData.SHOPADRESS2} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="address3">Address3</label>
-            <input type="text" id="address3" name="address3" value={formData.address3} onChange={handleInputChange} />
+            <input type="text" id="address3" name="STORE_ADDR3" value={formData.STORE_ADDR3} onChange={handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="city">City</label>
@@ -114,41 +150,41 @@ const Shop = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="postalCode">Postal Code</label>
-            <input type="text" id="postalCode" name="postalCode" value={formData.postalCode} onChange={handleInputChange} />
+            <input type="text" id="postalCode" name="pcode" value={formData.pcode} onChange={handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="email">E-Mail</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+            <input type="email" id="email" name="Email" value={formData.Email} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="primaryPhone">Primary Phone</label>
-            <input type="tel" id="primaryPhone" name="primaryPhone" value={formData.primaryPhone} onChange={handleInputChange} />
+            <input type="tel" id="primaryPhone" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="secondaryPhone">Secondary Phone</label>
-            <input type="tel" id="secondaryPhone" name="secondaryPhone" value={formData.secondaryPhone} onChange={handleInputChange} />
+            <input type="tel" id="SHOPPHONENUMBER2" name="SHOPPHONENUMBER2" value={formData.SHOPPHONENUMBER2} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="mainContactPerson">Main Contact Person</label>
-            <input type="text" id="mainContactPerson" name="mainContactPerson" value={formData.mainContactPerson} onChange={handleInputChange} />
+            <input type="text" id="mainContactPerson" name="SHOPINCHANGE" value={formData.SHOPINCHANGE} onChange={handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="mainContactPersonContact">Main Contact Person Contact</label>
-            <input type="tel" id="mainContactPersonContact" name="mainContactPersonContact" value={formData.mainContactPersonContact} onChange={handleInputChange} />
+            <input type="tel" id="mainContactPersonContact" name="SHOPINCHANGEPHONE" value={formData.SHOPINCHANGEPHONE} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="openTime">Open Time</label>
-            <input type="time" id="openTime" name="openTime" value={formData.openTime} onChange={handleInputChange} />
+            <input type="time" id="openTime" name="STORE_OPENTM" value={formData.STORE_OPENTM} onChange={handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="closeTime">Close Time</label>
-            <input type="time" id="closeTime" name="closeTime" value={formData.closeTime} onChange={handleInputChange} />
+            <input type="time" id="closeTime" name="STORE_CLOSETM" value={formData.STORE_CLOSETM} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
@@ -159,7 +195,7 @@ const Shop = () => {
                 <button
                   key={index}
                   type="button"
-                  className={formData.workingDays.includes(day) ? 'active' : ''}
+                  className={formData.STORE_OPENDAYS.includes(day) ? 'active' : ''}
                   onClick={() => handleWorkingDaysChange(day)}
                 >
                   {day}
@@ -177,8 +213,8 @@ const Shop = () => {
                 checked={formData.preOrderAvail}
                 onChange={handleInputChange}
               />
-              <label htmlFor="preOrderAvail">
-                {formData.preOrderAvail ? 'Active' : 'Inactive'}
+              <label htmlFor="STORE_Preorderavail">
+                {formData.STORE_Preorderavail ? 'Active' : 'Inactive'}
               </label>
             </div>
           </div>
@@ -186,11 +222,11 @@ const Shop = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="deliveryCharge">Delivery Charge</label>
-            <input type="number" id="deliveryCharge" name="deliveryCharge" value={formData.deliveryCharge} onChange={handleInputChange} step="0.01" />
+            <input type="number" id="deliveryCharge" name="STORE_DELIVCHRG" value={formData.STORE_DELIVCHRG} onChange={handleInputChange} step="0.01" />
           </div>
           <div className="form-group">
             <label htmlFor="paymentMode">Payment Mode</label>
-            <select id="paymentMode" name="paymentMode" value={formData.paymentMode} onChange={handleInputChange}>
+            <select id="paymentMode" name="STORE_PAYMODE" value={formData.STORE_PAYMODE} onChange={handleInputChange}>
               <option value="">Select</option>
               <option value="cash">Cash</option>
               <option value="card">Card</option>
@@ -253,7 +289,7 @@ const Shop = () => {
           </div>
           <div className="form-group">
             <label htmlFor="paymentPlan">Payment Plan</label>
-            <select id="paymentPlan" name="paymentPlan" value={formData.paymentPlan} onChange={handleInputChange}>
+            <select id="paymentPlan" name="STORE_PAYMODE" value={formData.STORE_PAYMODE} onChange={handleInputChange}>
               <option value="">Select</option>
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
@@ -263,11 +299,11 @@ const Shop = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="averageCost">Average Cost</label>
-            <input type="number" id="averageCost" name="averageCost" value={formData.averageCost} onChange={handleInputChange} step="0.01" />
+            <input type="number" id="averageCost" name="STORE_AVgcost" value={formData.STORE_AVgcost} onChange={handleInputChange} step="0.01" />
           </div>
           <div className="form-group">
             <label htmlFor="deliveryTotalMinute">Delivery Total Minute</label>
-            <input type="number" id="deliveryTotalMinute" name="deliveryTotalMinute" value={formData.deliveryTotalMinute} onChange={handleInputChange} />
+            <input type="number" id="deliveryTotalMinute" name="STORE_Deliveryminutes" value={formData.STORE_Deliveryminutes} onChange={handleInputChange} />
           </div>
         </div>
         <div className="form-row">
@@ -324,8 +360,7 @@ const Shop = () => {
         </div>
         <button type="submit" className="submit-btn">Create Store</button>
       </form>
+      {apiError && <div className="error-message">{apiError}</div>}
     </div>
   );
-};
-
-export default Shop;
+}

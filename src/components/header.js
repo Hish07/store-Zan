@@ -27,8 +27,8 @@ const Header = ({ toggleSidebar }) => {
           />
           <div className="profile-details">
             {/* <span className="user-name">Arfi Ganteng</span> */}
-            <span className="user-name">{ formData.firstName} {formData.lastName}</span>
-            <span className="user-email"> { formData.email }</span>
+            <span className="user-name">{ formData.FirstName} {formData.LastName}</span>
+            <span className="user-email"> { formData.Email }</span>
           </div>
           <FaChevronDown className="dropdown-icon" />
         </div>

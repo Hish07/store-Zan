@@ -86,55 +86,55 @@ export const StoreProvider = ({ children }) => {
   const updateFormData = (storeData) => {
     setFormData({
       // Shop and Store Info
-      shopName: storeData.SHOPNAME || '',
-      shopCode: storeData.SHOPCODE || '',
+      SHOPNAME: storeData.SHOPNAME || '',
+      SHOPCODE : storeData.SHOPCODE || '',
       branch: storeData.branch || '',
-      url: storeData.STORE_URL || '',
+      STORE_URL: storeData.STORE_URL || '',
       address1: storeData.address || '',
-      address2: storeData.SHOPADDRESS2 || '',
-      address3: storeData.STORE_ADDR3 || '',
+      SHOPADDRESS2: storeData.SHOPADDRESS2 || '',
+      STORE_ADDR3 : storeData.STORE_ADDR3 || '',
       city: storeData.city || '',
       state: storeData.state || '',
       country: storeData.country || '',
-      postalCode: storeData.pcode || '',
-      openTime: formatTime(storeData.STORE_OPENTM),
-      closeTime: formatTime(storeData.STORE_CLOSETM),
-      workingDays: parseWorkingDays(storeData.STORE_OPENDAYS),
+      pcode: storeData.pcode || '',
+      STORE_OPENTM: formatTime(storeData.STORE_OPENTM),
+      STORE_CLOSETM: formatTime(storeData.STORE_CLOSETM),
+      STORE_OPENDAYS: parseWorkingDays(storeData.STORE_OPENDAYS),
       yearOfOperation: storeData.yearofoperation || '',
-      averageCost: storeData.STORE_Avgcost || 0,
+      STORE_Avgcost: storeData.STORE_Avgcost || 0,
   
       // Contact Info
-      email: storeData.Email || '',
-      primaryPhone: storeData.PhoneNumber || '',
-      secondaryPhone: storeData.SHOPPHONENUMBER2 || '',
-      mainContactPerson: storeData.SHOPINCHANGE || '',
-      mainContactPersonContact: storeData.SHOPINCHANGEPHONE || '',
+      Email: storeData.Email || '',
+      PhoneNumber: storeData.PhoneNumber || '',
+      SHOPPHONENUMBER2 : storeData.SHOPPHONENUMBER2 || '',
+      SHOPINCHANGE: storeData.SHOPINCHANGE || '',
+      SHOPINCHANGEPHONE: storeData.SHOPINCHANGEPHONE || '',
   
       // Company and Category Info
-      companyName: storeData.Companyname || '',
-      category: storeData.CATNAME || '',
-      categoryId: storeData.categoryid || 0,
+      CompanyName: storeData.Companyname || '',
+      CATNAME : storeData.CATNAME || '',
+      categoryid: storeData.categoryid || 0,
   
       // Delivery and Payment
-      deliveryCharge: storeData.STORE_DELIVCHRG || 0,
-      deliveryTotalMinute: storeData.STORE_Deliveryminutes || 0,
-      preOrderAvail: storeData.STORE_Preorderavail === 'T',
-      paymentMode: storeData.STORE_PAYMODE === 'O' ? 'online' : (storeData.STORE_PAYMODE === 'C' ? 'cash' : ''),
-      paymentPlan: storeData.STORE_Payment_P_ID === 1 ? 'percentage' : (storeData.STORE_Payment_P_ID === 2 ? 'monthly' : ''),
-      buyOption: storeData.STORE_BOID === 1 ? 'delivery' : (storeData.STORE_BOID === 2 ? 'takeaway' : ''),
+      STORE_DELIVCHRG: storeData.STORE_DELIVCHRG || 0,
+      STORE_Deliveryminutes: storeData.STORE_Deliveryminutes || 0,
+      STORE_Preorderavail : storeData.STORE_Preorderavail === 'T',
+      STORE_PAYMODE: storeData.STORE_PAYMODE === 'O' ? 'online' : (storeData.STORE_PAYMODE === 'C' ? 'cash' : ''),
+      STORE_Payment_P_ID: storeData.STORE_Payment_P_ID === 1 ? 'percentage' : (storeData.STORE_Payment_P_ID === 2 ? 'monthly' : ''),
+      STORE_BOID: storeData.STORE_BOID === 1 ? 'delivery' : (storeData.STORE_BOID === 2 ? 'takeaway' : ''),
   
       // Status
       status: storeData.status === 'T' ? 'active' : 'inactive',
   
       // Other Shop Info
-      shopEmail: storeData.SHOPEMAIL || '',
-      shopLanguage: storeData.SHOPLANG || '',
-      shopComments: storeData.SHOPCOMMENTS || '',
-      shopLat: storeData.SHOPLAT || '',
+      SHOPEMAIL : storeData.SHOPEMAIL || '',
+      SHOPLANG: storeData.SHOPLANG || '',
+      SHOPCOMMENTS: storeData.SHOPCOMMENTS || '',
+      SHOPLAT : storeData.SHOPLAT || '',
   
       // Owner Info
-      firstName: storeData.FirstName || '',
-      lastName: storeData.LastName || '',
+      FirstName: storeData.FirstName || '',
+      LastName: storeData.LastName || '',
       
       // Miscellaneous
       currency: storeData.currency === 1 ? 'INR' : '',
